@@ -274,7 +274,7 @@ class ObjectSerializer
         }
 
         $replace_me = array('ErrorCode', 'ErrorType', 'CategorizationStatus', 'BankingInterface', 
-        'BankConsent', 'BankConsentStatus',  'Bank', 'BankInterfaceProperty' );
+        'BankConsent', 'BankConsentStatus',  'Bank', 'BankInterfaceProperty', 'BankGroup' );
         if(in_array($class, $replace_me)) {
             $class = "\OpenAPIAccess\Client\Model\\$class";
         }

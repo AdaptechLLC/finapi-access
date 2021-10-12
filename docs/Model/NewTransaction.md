@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **counterpart_customer_reference** | **string** | The customer reference of the counterpart. The maximum possible length of this field is 270 characters. | [optional]
 **counterpart_debitor_id** | **string** | The originator&#39;s identification code. Exists only for SEPA money transfer transactions (\&quot;Überweisung\&quot;). The maximum possible length of this field is 100 characters. | [optional]
 **type** | **string** | Transaction type, according to the bank. If set, this will contain a German term that you can display to the user. Some examples of common values are: \&quot;Lastschrift\&quot;, \&quot;Auslands&amp;uuml;berweisung\&quot;, \&quot;Geb&amp;uuml;hren\&quot;, \&quot;Zinsen\&quot;. The maximum possible length of this field is 270 characters. | [optional]
-**type_code_swift** | **string** | SWIFT transaction type code. If no information about the SWIFT code is available, then this field will be null. | [optional]
+**type_code_swift** | **string** | SWIFT transaction type code. | [optional]
+**sepa_purpose_code** | **string** | SEPA purpose code. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

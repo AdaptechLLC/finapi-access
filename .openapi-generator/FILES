@@ -25,6 +25,7 @@ docs/Model/AccessToken.md
 docs/Model/Account.md
 docs/Model/AccountCapability.md
 docs/Model/AccountInterface.md
+docs/Model/AccountInterfacePaymentCapabilities.md
 docs/Model/AccountList.md
 docs/Model/AccountParams.md
 docs/Model/AccountReference.md
@@ -41,6 +42,7 @@ docs/Model/BankConsentStatus.md
 docs/Model/BankGroup.md
 docs/Model/BankInterface.md
 docs/Model/BankInterfaceLoginField.md
+docs/Model/BankInterfacePaymentCapabilities.md
 docs/Model/BankInterfaceProperty.md
 docs/Model/BankingInterface.md
 docs/Model/CashFlow.md
@@ -122,6 +124,7 @@ docs/Model/PasswordChangingResource.md
 docs/Model/Payment.md
 docs/Model/PaymentStatus.md
 docs/Model/PaymentType.md
+docs/Model/PaypalTransactionData.md
 docs/Model/PreferredConsentType.md
 docs/Model/Product.md
 docs/Model/RemoveInterfaceParams.md
@@ -184,6 +187,7 @@ lib/Model/AccessToken.php
 lib/Model/Account.php
 lib/Model/AccountCapability.php
 lib/Model/AccountInterface.php
+lib/Model/AccountInterfacePaymentCapabilities.php
 lib/Model/AccountList.php
 lib/Model/AccountParams.php
 lib/Model/AccountReference.php
@@ -200,6 +204,7 @@ lib/Model/BankConsentStatus.php
 lib/Model/BankGroup.php
 lib/Model/BankInterface.php
 lib/Model/BankInterfaceLoginField.php
+lib/Model/BankInterfacePaymentCapabilities.php
 lib/Model/BankInterfaceProperty.php
 lib/Model/BankingInterface.php
 lib/Model/CashFlow.php
@@ -282,6 +287,7 @@ lib/Model/PasswordChangingResource.php
 lib/Model/Payment.php
 lib/Model/PaymentStatus.php
 lib/Model/PaymentType.php
+lib/Model/PaypalTransactionData.php
 lib/Model/PreferredConsentType.php
 lib/Model/Product.php
 lib/Model/RemoveInterfaceParams.php
@@ -340,6 +346,7 @@ test/Api/UsersApiTest.php
 test/Api/WebFormsApiTest.php
 test/Model/AccessTokenTest.php
 test/Model/AccountCapabilityTest.php
+test/Model/AccountInterfacePaymentCapabilitiesTest.php
 test/Model/AccountInterfaceTest.php
 test/Model/AccountListTest.php
 test/Model/AccountParamsTest.php
@@ -356,6 +363,7 @@ test/Model/BankConsentStatusTest.php
 test/Model/BankConsentTest.php
 test/Model/BankGroupTest.php
 test/Model/BankInterfaceLoginFieldTest.php
+test/Model/BankInterfacePaymentCapabilitiesTest.php
 test/Model/BankInterfacePropertyTest.php
 test/Model/BankInterfaceTest.php
 test/Model/BankTest.php
@@ -439,6 +447,7 @@ test/Model/PasswordChangingResourceTest.php
 test/Model/PaymentStatusTest.php
 test/Model/PaymentTest.php
 test/Model/PaymentTypeTest.php
+test/Model/PaypalTransactionDataTest.php
 test/Model/PreferredConsentTypeTest.php
 test/Model/ProductTest.php
 test/Model/RemoveInterfaceParamsTest.php

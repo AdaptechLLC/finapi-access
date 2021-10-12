@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="58ccd954-d2d3-40ea-ab85-659bf6485f20" name="Changes" comment="" />
+    <list default="true" id="84ea2484-01c5-4ff1-bd27-1e3408bf6796" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
-  <component name="ProjectId" id="1xJRzWwUPK9wCZGdhnqi92ASqtw" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1zMK1s4KkQpauinDthtyH40PJq8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -20,24 +28,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../webform" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="58ccd954-d2d3-40ea-ab85-659bf6485f20" name="Changes" comment="" />
-      <created>1630071470050</created>
+      <changelist id="84ea2484-01c5-4ff1-bd27-1e3408bf6796" name="Changes" comment="" />
+      <created>1633952305043</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1630071470050</updated>
-      <workItem from="1630071471601" duration="9000" />
-      <workItem from="1630071483160" duration="641000" />
-      <workItem from="1630072339087" duration="45000" />
-      <workItem from="1630317584339" duration="168000" />
-      <workItem from="1630325152271" duration="4000" />
-      <workItem from="1630332939779" duration="306000" />
-      <workItem from="1630394431441" duration="977000" />
+      <updated>1633952305043</updated>
+      <workItem from="1633952306221" duration="4444000" />
     </task>
     <servers />
   </component>

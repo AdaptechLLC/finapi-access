@@ -35,6 +35,7 @@ Name | Type | Description | Notes
 **is_new** | **bool** | Indicating whether this transaction is &#39;new&#39; or not. Any newly imported transaction will have this flag initially set to true. How you use this field is up to your interpretation. For example, you might want to set it to false once a user has clicked on/seen the transaction. You can change this flag to &#39;false&#39; with the PATCH method. |
 **import_date** | **string** | Date of transaction import, in the format &#39;YYYY-MM-DD HH:MM:SS.SSS&#39; (german time). |
 **children** | **int[]** | Sub-transactions identifiers (if this transaction is split) |
+**paypal_data** | [**PaypalTransactionData**](PaypalTransactionData.md) | &lt;strong&gt;Type:&lt;/strong&gt; PaypalTransactionData&lt;br/&gt; Additional, PayPal-specific transaction data. |
 **end_to_end_reference** | **string** | End-To-End reference |
 **compensation_amount** | **float** | Compensation Amount. Sum of reimbursement of out-of-pocket expenses plus processing brokerage in case of a national return / refund debit as well as an optional interest equalisation. Exists predominantly for SEPA direct debit returns. |
 **original_amount** | **float** | Original Amount of the original direct debit. Exists predominantly for SEPA direct debit returns. |

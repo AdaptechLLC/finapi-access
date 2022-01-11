@@ -340,9 +340,9 @@ class ObjectSerializer
         }
 
         //Omer SALAJ was here!
-        //if(strpos($class, 'OpenAPIAccess\Client\Model') === false && $class !== '\SplFileObject') {
-        //    $class = "\OpenAPIAccess\Client\Model\\$class";
-        //}
+        if(strpos($class, 'OpenAPIAccess\Client\Model') === false && $class !== '\SplFileObject') {
+            $class = "\OpenAPIAccess\Client\Model\\$class";
+        }
 
         if ($class === '\SplFileObject') {
             /** @var \Psr\Http\Message\StreamInterface $data */

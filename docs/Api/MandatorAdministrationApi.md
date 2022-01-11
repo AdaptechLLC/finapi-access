@@ -23,7 +23,7 @@ changeClientCredentials($change_client_credentials_params, $x_request_id)
 
 Change client credentials
 
-Change the client_secret for any of your clients, including the mandator admin client. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client'>mandator admin client</a>'s access_token. <br/><br/>NOTES:<br/>&bull; When you change a client's secret, then all of its existing access tokens will be revoked. User access tokens are not affected.<br/>&bull; finAPI is storing client secrets with a one-way encryption. A lost client secret can NOT be recovered.
+Change the client_secret for any of your clients, including the mandator admin client. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token. <br/><br/>NOTES:<br/>&bull; When you change a client's secret, then all of its existing access tokens will be revoked. User access tokens are not affected.<br/>&bull; finAPI is storing client secrets with a one-way encryption. A lost client secret can NOT be recovered.
 
 ### Example
 
@@ -347,7 +347,7 @@ deleteUsers($user_identifiers_params, $x_request_id): \OpenAPIAccess\Client\Mode
 
 Delete users
 
-Delete one or several users, which are specified by a given list of identifiers. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. <br/><br/><b>NOTE</b>: finAPI may fail to delete one (or several, or all) of the specified users. A user cannot get deleted when his data is currently locked by an internal process (for instance, update of a bank connection or transactions categorization). The response contains the identifiers of all users that could not get deleted, and all users that could get deleted, separated in two lists. The mandator admin client can retry the request at a later time for the users who could not get deleted.<br/> Note that non-existing user identifiers will be ignored entirely, meaning that those identifiers will not appear in the response at all.
+Delete one or several users, which are specified by a given list of identifiers. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token. <br/><br/><b>NOTE</b>: finAPI may fail to delete one (or several, or all) of the specified users. A user cannot get deleted when his data is currently locked by an internal process (for instance, update of a bank connection or transaction categorization). The response contains the identifiers of all users that could not get deleted, and all users that could get deleted, separated in two lists. The mandator admin client can retry the request at a later time for the users who could not get deleted.<br/> Note that non-existing user identifiers will be ignored entirely, meaning that those identifiers will not appear in the response at all.
 
 ### Example
 
@@ -407,7 +407,7 @@ Name | Type | Description  | Notes
 ## `getIbanRuleList()`
 
 ```php
-getIbanRuleList($page, $per_page, $x_request_id): \OpenAPIAccess\Client\Model\PageableIbanRuleList
+getIbanRuleList($page, $per_page, $order, $x_request_id): \OpenAPIAccess\Client\Model\PageableIbanRuleList
 ```
 
 Get IBAN rules
@@ -436,10 +436,11 @@ $apiInstance = new OpenAPIAccess\Client\Api\MandatorAdministrationApi(
 );
 $page = 1; // int | Result page that you want to retrieve
 $per_page = 20; // int | Maximum number of records per page. By default it's 20. Can be at most 500.
+$order = array('order_example'); // string[] | Determines the order of the results. You can order the results by 'id'. The default order for this service is 'id,asc'. The general format is: 'property[,asc|desc]', with 'asc' being the default value.
 $x_request_id = 'x_request_id_example'; // string | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don't pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name 'X-Request-Id'. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster.
 
 try {
-    $result = $apiInstance->getIbanRuleList($page, $per_page, $x_request_id);
+    $result = $apiInstance->getIbanRuleList($page, $per_page, $order, $x_request_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MandatorAdministrationApi->getIbanRuleList: ', $e->getMessage(), PHP_EOL;
@@ -452,6 +453,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page** | **int**| Result page that you want to retrieve | [optional] [default to 1]
  **per_page** | **int**| Maximum number of records per page. By default it&#39;s 20. Can be at most 500. | [optional] [default to 20]
+ **order** | [**string[]**](../Model/string.md)| Determines the order of the results. You can order the results by &#39;id&#39;. The default order for this service is &#39;id,asc&#39;. The general format is: &#39;property[,asc|desc]&#39;, with &#39;asc&#39; being the default value. | [optional]
  **x_request_id** | **string**| With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don&#39;t pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name &#39;X-Request-Id&#39;. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. | [optional]
 
 ### Return type
@@ -474,7 +476,7 @@ Name | Type | Description  | Notes
 ## `getKeywordRuleList()`
 
 ```php
-getKeywordRuleList($page, $per_page, $x_request_id): \OpenAPIAccess\Client\Model\PageableKeywordRuleList
+getKeywordRuleList($page, $per_page, $order, $x_request_id): \OpenAPIAccess\Client\Model\PageableKeywordRuleList
 ```
 
 Get keyword rules
@@ -503,10 +505,11 @@ $apiInstance = new OpenAPIAccess\Client\Api\MandatorAdministrationApi(
 );
 $page = 1; // int | Result page that you want to retrieve
 $per_page = 20; // int | Maximum number of records per page. By default it's 20. Can be at most 500.
+$order = array('order_example'); // string[] | Determines the order of the results. You can order the results by 'id'. The default order for this service is 'id,asc'. The general format is: 'property[,asc|desc]', with 'asc' being the default value.
 $x_request_id = 'x_request_id_example'; // string | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don't pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name 'X-Request-Id'. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster.
 
 try {
-    $result = $apiInstance->getKeywordRuleList($page, $per_page, $x_request_id);
+    $result = $apiInstance->getKeywordRuleList($page, $per_page, $order, $x_request_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MandatorAdministrationApi->getKeywordRuleList: ', $e->getMessage(), PHP_EOL;
@@ -519,6 +522,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page** | **int**| Result page that you want to retrieve | [optional] [default to 1]
  **per_page** | **int**| Maximum number of records per page. By default it&#39;s 20. Can be at most 500. | [optional] [default to 20]
+ **order** | [**string[]**](../Model/string.md)| Determines the order of the results. You can order the results by &#39;id&#39;. The default order for this service is &#39;id,asc&#39;. The general format is: &#39;property[,asc|desc]&#39;, with &#39;asc&#39; being the default value. | [optional]
  **x_request_id** | **string**| With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don&#39;t pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name &#39;X-Request-Id&#39;. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. | [optional]
 
 ### Return type
@@ -546,7 +550,7 @@ getUserList($min_registration_date, $max_registration_date, $min_deletion_date, 
 
 Get user list
 
-<p>Get a list of the users of the mandator that is authorized by the access_token. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those users that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.</p><p>Note that the original user id is no longer available in finAPI once a user has been deleted. Because of this, the userId of deleted users will be a distorted version of the original userId. For example, if the deleted user's id was originally 'user', then this service will return 'uXXr' as the userId.</p>
+<p>Get a list of the users of the mandator that is authorized by the access_token. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those users that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.</p><p>Note that the original user id is no longer available in finAPI once a user has been deleted. Because of this, the userId of deleted users will be a distorted version of the original userId. For example, if the deleted user's id was originally 'user', then this service will return 'uXXr' as the userId.</p>
 
 ### Example
 

@@ -16,7 +16,7 @@ checkCategorization($check_categorization_data, $x_request_id): \OpenAPIAccess\C
 
 Check categorization
 
-This service can be used to check the categorization for a given set of transactions, without the need of having the transactions actually imported in finAPI. The result of the categorization is the same as if the transactions were actually imported (the service regards the user-specific categorization rules of the user that is authorized by the access_token). Must pass the user's access_token.
+This service can be used to check the categorization for a given set of transactions, without the need of having the transactions imported in finAPI. You must pass the user's access_token.<br/><br/>Note that the result of the categorization is generally the same as if the transactions were actually imported (the service regards the user-specific categorization rules), but there is one exception: If you pass a ‘mcCode’, this will also be regarded during categorization - which is not the case when transactions get categorized during import (because most banks do not deliver this field).
 
 ### Example
 

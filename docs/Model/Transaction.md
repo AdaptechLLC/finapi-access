@@ -27,6 +27,7 @@ Name | Type | Description | Notes
 **type_code_zka** | **string** | ZKA business transaction code which relates to the transaction&#39;s type. Possible values range from 1 through 999. If no information about the ZKA type code is available, then this field will be null. |
 **type_code_swift** | **string** | SWIFT transaction type code. If no information about the SWIFT code is available, then this field will be null. |
 **sepa_purpose_code** | **string** | SEPA purpose code, according to ISO 20022 |
+**bank_transaction_code** | **string** | Bank transaction code, according to ISO 20022 |
 **primanota** | **string** | Transaction primanota (bank side identification number) |
 **category** | [**Category**](Category.md) | &lt;strong&gt;Type:&lt;/strong&gt; Category&lt;br/&gt; Transaction category, if any is assigned. Note: Recently imported transactions that have currently no category assigned might still get categorized by the background categorization process. To check the status of the background categorization, see GET /bankConnections. Manual category assignments to a transaction will remove the transaction from the background categorization process (i.e. the background categorization process will never overwrite a manual category assignment). |
 **labels** | [**\OpenAPIAccess\Client\Model\Label[]**](Label.md) | &lt;strong&gt;Type:&lt;/strong&gt; Label&lt;br/&gt; Array of assigned labels |

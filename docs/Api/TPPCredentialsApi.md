@@ -20,7 +20,7 @@ createTppCredential($tpp_credentials_params, $x_request_id): \OpenAPIAccess\Clie
 
 Upload TPP credentials
 
-Upload TPP credentials for a TPP Authentication Group. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token.
+Upload TPP credentials for a TPP Authentication Group. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token.
 
 ### Example
 
@@ -85,7 +85,7 @@ deleteTppCredential($id, $x_http_method_override, $x_request_id)
 
 Delete a set of TPP credentials
 
-Delete a single set of TPP credentials by its id. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token.
+Delete a single set of TPP credentials by its id. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token.
 
 ### Example
 
@@ -151,7 +151,7 @@ editTppCredential($id, $edit_tpp_credential_params, $x_http_method_override, $x_
 
 Edit a set of TPP credentials
 
-Edit TPP credentials data. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token.
+Edit TPP credentials data. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token.
 
 ### Example
 
@@ -215,12 +215,12 @@ Name | Type | Description  | Notes
 ## `getAllTppCredentials()`
 
 ```php
-getAllTppCredentials($search, $page, $per_page, $x_request_id): \OpenAPIAccess\Client\Model\PageableTppCredentialResources
+getAllTppCredentials($search, $page, $per_page, $order, $x_request_id): \OpenAPIAccess\Client\Model\PageableTppCredentialResources
 ```
 
 Get all TPP credentials
 
-Get and search all TPP credentials. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those TPP credentials that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.
+Get and search all TPP credentials. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those TPP credentials that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.
 
 ### Example
 
@@ -242,13 +242,14 @@ $apiInstance = new OpenAPIAccess\Client\Api\TPPCredentialsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$search = 'search_example'; // string | Returns only the TPP credentials belonging to those banks whose 'name', 'blz', or 'bic' contains the given search string (the matching works case-insensitive). Note: If the given search string consists of several terms (separated by whitespace), then ALL of these terms must apply to a bank in order for it to get included into the result.
+$search = 'search_example'; // string | Returns only the TPP credentials belonging to those banks whose 'name', 'blz', or 'bic' contains the given search string (the matching works case-insensitive). Note: If the given search string consists of several terms (separated by whitespace), then ALL of these terms must apply to a bank for it to get included into the result.
 $page = 1; // int | Result page that you want to retrieve
 $per_page = 20; // int | Maximum number of records per page. By default it's 20. Can be at most 500.
+$order = array('order_example'); // string[] | Determines the order of the results. You can order the results by 'label'. The default order for this service is 'label,asc'. The general format is: 'property[,asc|desc]', with 'asc' being the default value.
 $x_request_id = 'x_request_id_example'; // string | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don't pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name 'X-Request-Id'. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster.
 
 try {
-    $result = $apiInstance->getAllTppCredentials($search, $page, $per_page, $x_request_id);
+    $result = $apiInstance->getAllTppCredentials($search, $page, $per_page, $order, $x_request_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TPPCredentialsApi->getAllTppCredentials: ', $e->getMessage(), PHP_EOL;
@@ -259,9 +260,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **search** | **string**| Returns only the TPP credentials belonging to those banks whose &#39;name&#39;, &#39;blz&#39;, or &#39;bic&#39; contains the given search string (the matching works case-insensitive). Note: If the given search string consists of several terms (separated by whitespace), then ALL of these terms must apply to a bank in order for it to get included into the result. | [optional]
+ **search** | **string**| Returns only the TPP credentials belonging to those banks whose &#39;name&#39;, &#39;blz&#39;, or &#39;bic&#39; contains the given search string (the matching works case-insensitive). Note: If the given search string consists of several terms (separated by whitespace), then ALL of these terms must apply to a bank for it to get included into the result. | [optional]
  **page** | **int**| Result page that you want to retrieve | [optional] [default to 1]
  **per_page** | **int**| Maximum number of records per page. By default it&#39;s 20. Can be at most 500. | [optional] [default to 20]
+ **order** | [**string[]**](../Model/string.md)| Determines the order of the results. You can order the results by &#39;label&#39;. The default order for this service is &#39;label,asc&#39;. The general format is: &#39;property[,asc|desc]&#39;, with &#39;asc&#39; being the default value. | [optional]
  **x_request_id** | **string**| With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don&#39;t pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name &#39;X-Request-Id&#39;. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. | [optional]
 
 ### Return type
@@ -284,12 +286,12 @@ Name | Type | Description  | Notes
 ## `getAndSearchTppAuthenticationGroups()`
 
 ```php
-getAndSearchTppAuthenticationGroups($ids, $name, $bank_blz, $bank_name, $page, $per_page, $x_request_id): \OpenAPIAccess\Client\Model\PageableTppAuthenticationGroupResources
+getAndSearchTppAuthenticationGroups($ids, $name, $bank_blz, $bank_name, $page, $per_page, $order, $x_request_id): \OpenAPIAccess\Client\Model\PageableTppAuthenticationGroupResources
 ```
 
 Get all TPP Authentication Groups
 
-Get and search across all available TPP authentication groups. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those TPP authentication groups that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.
+Get and search across all available TPP authentication groups. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token. You can set optional search criteria to get only those TPP authentication groups that you are interested in. If you do not specify any search criteria, then this service functions as a 'get all' service.
 
 ### Example
 
@@ -317,10 +319,11 @@ $bank_blz = 'bank_blz_example'; // string | Search by connected banks: only the 
 $bank_name = 'bank_name_example'; // string | Search by connected banks: only the banks with name matching the given one should appear in the result list
 $page = 1; // int | Result page that you want to retrieve
 $per_page = 20; // int | Maximum number of records per page. By default it's 20. Can be at most 500.
+$order = array('order_example'); // string[] | Determines the order of the results. You can order the results by 'id' and 'name'. The default order for this service is 'id,asc'. The general format is: 'property[,asc|desc]', with 'asc' being the default value.
 $x_request_id = 'x_request_id_example'; // string | With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don't pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name 'X-Request-Id'. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster.
 
 try {
-    $result = $apiInstance->getAndSearchTppAuthenticationGroups($ids, $name, $bank_blz, $bank_name, $page, $per_page, $x_request_id);
+    $result = $apiInstance->getAndSearchTppAuthenticationGroups($ids, $name, $bank_blz, $bank_name, $page, $per_page, $order, $x_request_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TPPCredentialsApi->getAndSearchTppAuthenticationGroups: ', $e->getMessage(), PHP_EOL;
@@ -337,6 +340,7 @@ Name | Type | Description  | Notes
  **bank_name** | **string**| Search by connected banks: only the banks with name matching the given one should appear in the result list | [optional]
  **page** | **int**| Result page that you want to retrieve | [optional] [default to 1]
  **per_page** | **int**| Maximum number of records per page. By default it&#39;s 20. Can be at most 500. | [optional] [default to 20]
+ **order** | [**string[]**](../Model/string.md)| Determines the order of the results. You can order the results by &#39;id&#39; and &#39;name&#39;. The default order for this service is &#39;id,asc&#39;. The general format is: &#39;property[,asc|desc]&#39;, with &#39;asc&#39; being the default value. | [optional]
  **x_request_id** | **string**| With any API call, you can pass a request ID. The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. If you don&#39;t pass a request ID for a call, finAPI will generate a random ID internally. The request ID is always returned back in the response of a service, as a header with name &#39;X-Request-Id&#39;. We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster. | [optional]
 
 ### Return type
@@ -364,7 +368,7 @@ getTppCredential($id, $x_request_id): \OpenAPIAccess\Client\Model\TppCredentials
 
 Get a set of TPP credentials
 
-Get a single set of TPP credentials by its id. Must pass the <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>mandator admin client</a>'s access_token.
+Get a single set of TPP credentials by its id. Must pass the <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>mandator admin client</a>'s access_token.
 
 ### Example
 

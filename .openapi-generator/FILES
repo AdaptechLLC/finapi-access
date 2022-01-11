@@ -20,7 +20,6 @@ docs/Api/TPPCertificatesApi.md
 docs/Api/TPPCredentialsApi.md
 docs/Api/TransactionsApi.md
 docs/Api/UsersApi.md
-docs/Api/WebFormsApi.md
 docs/Model/AccessToken.md
 docs/Model/Account.md
 docs/Model/AccountCapability.md
@@ -44,6 +43,7 @@ docs/Model/BankInterface.md
 docs/Model/BankInterfaceLoginField.md
 docs/Model/BankInterfacePaymentCapabilities.md
 docs/Model/BankInterfaceProperty.md
+docs/Model/BankList.md
 docs/Model/BankingInterface.md
 docs/Model/CashFlow.md
 docs/Model/CashFlowList.md
@@ -52,10 +52,12 @@ docs/Model/CategorizationCheckResults.md
 docs/Model/CategorizationRuleDirection.md
 docs/Model/CategorizationStatus.md
 docs/Model/Category.md
+docs/Model/CategoryList.md
 docs/Model/CategoryParams.md
 docs/Model/ChangeClientCredentialsParams.md
 docs/Model/CheckCategorizationData.md
 docs/Model/CheckCategorizationTransactionData.md
+docs/Model/ClearingAccountData.md
 docs/Model/ClientConfiguration.md
 docs/Model/ClientConfigurationParams.md
 docs/Model/ConnectInterfaceParams.md
@@ -67,6 +69,7 @@ docs/Model/DailyBalanceList.md
 docs/Model/DeleteConsent.md
 docs/Model/DeleteConsentResult.md
 docs/Model/DirectDebitOrderParams.md
+docs/Model/DirectDebitOrderingResponse.md
 docs/Model/DirectDebitSequenceType.md
 docs/Model/DirectDebitType.md
 docs/Model/EditBankConnectionParams.md
@@ -77,6 +80,8 @@ docs/Model/ErrorDetails.md
 docs/Model/ErrorMessage.md
 docs/Model/ErrorType.md
 docs/Model/ExecutePasswordChangeParams.md
+docs/Model/ExecuteSepaDirectDebitParams.md
+docs/Model/ExecuteSepaMoneyTransferParams.md
 docs/Model/ISO3166Alpha2Codes.md
 docs/Model/IbanRule.md
 docs/Model/IbanRuleIdentifiersParams.md
@@ -91,6 +96,7 @@ docs/Model/KeywordRuleList.md
 docs/Model/KeywordRuleParams.md
 docs/Model/KeywordRulesParams.md
 docs/Model/Label.md
+docs/Model/LabelList.md
 docs/Model/LabelParams.md
 docs/Model/LoginCredential.md
 docs/Model/LoginCredentialResource.md
@@ -99,6 +105,7 @@ docs/Model/MockAccountData.md
 docs/Model/MockBankConnectionUpdate.md
 docs/Model/MockBatchUpdateParams.md
 docs/Model/MoneyTransferOrderParams.md
+docs/Model/MoneyTransferOrderingResponse.md
 docs/Model/MonthlyUserStats.md
 docs/Model/MsaStatus.md
 docs/Model/MultiStepAuthenticationCallback.md
@@ -122,6 +129,7 @@ docs/Model/PageableUserInfoList.md
 docs/Model/Paging.md
 docs/Model/PasswordChangingResource.md
 docs/Model/Payment.md
+docs/Model/PaymentExecutionResponse.md
 docs/Model/PaymentStatus.md
 docs/Model/PaymentType.md
 docs/Model/PaypalTransactionData.md
@@ -129,12 +137,19 @@ docs/Model/PreferredConsentType.md
 docs/Model/Product.md
 docs/Model/RemoveInterfaceParams.md
 docs/Model/RequestPasswordChangeParams.md
+docs/Model/RequestSepaDirectDebitParams.md
+docs/Model/RequestSepaMoneyTransferParams.md
 docs/Model/Security.md
+docs/Model/SecurityList.md
 docs/Model/SecurityPositionQuantityNominalType.md
 docs/Model/SecurityPositionQuoteType.md
+docs/Model/SingleDirectDebitData.md
+docs/Model/SingleMoneyTransferRecipientData.md
 docs/Model/SplitTransactionsParams.md
 docs/Model/SubTransactionParams.md
 docs/Model/SubmitPaymentParams.md
+docs/Model/SupportedDataSource.md
+docs/Model/SupportedOrder.md
 docs/Model/TppAuthenticationGroup.md
 docs/Model/TppCertificate.md
 docs/Model/TppCertificateParams.md
@@ -145,6 +160,7 @@ docs/Model/TrainCategorizationData.md
 docs/Model/TrainCategorizationTransactionData.md
 docs/Model/Transaction.md
 docs/Model/TransactionDirection.md
+docs/Model/TransactionList.md
 docs/Model/TriggerCategorizationParams.md
 docs/Model/TwoStepProcedure.md
 docs/Model/UpdateBankConnectionParams.md
@@ -179,7 +195,6 @@ lib/Api/TPPCertificatesApi.php
 lib/Api/TPPCredentialsApi.php
 lib/Api/TransactionsApi.php
 lib/Api/UsersApi.php
-lib/Api/WebFormsApi.php
 lib/ApiException.php
 lib/Configuration.php
 lib/HeaderSelector.php
@@ -206,6 +221,7 @@ lib/Model/BankInterface.php
 lib/Model/BankInterfaceLoginField.php
 lib/Model/BankInterfacePaymentCapabilities.php
 lib/Model/BankInterfaceProperty.php
+lib/Model/BankList.php
 lib/Model/BankingInterface.php
 lib/Model/CashFlow.php
 lib/Model/CashFlowList.php
@@ -214,10 +230,12 @@ lib/Model/CategorizationCheckResults.php
 lib/Model/CategorizationRuleDirection.php
 lib/Model/CategorizationStatus.php
 lib/Model/Category.php
+lib/Model/CategoryList.php
 lib/Model/CategoryParams.php
 lib/Model/ChangeClientCredentialsParams.php
 lib/Model/CheckCategorizationData.php
 lib/Model/CheckCategorizationTransactionData.php
+lib/Model/ClearingAccountData.php
 lib/Model/ClientConfiguration.php
 lib/Model/ClientConfigurationParams.php
 lib/Model/ConnectInterfaceParams.php
@@ -229,6 +247,7 @@ lib/Model/DailyBalanceList.php
 lib/Model/DeleteConsent.php
 lib/Model/DeleteConsentResult.php
 lib/Model/DirectDebitOrderParams.php
+lib/Model/DirectDebitOrderingResponse.php
 lib/Model/DirectDebitSequenceType.php
 lib/Model/DirectDebitType.php
 lib/Model/EditBankConnectionParams.php
@@ -239,6 +258,8 @@ lib/Model/ErrorDetails.php
 lib/Model/ErrorMessage.php
 lib/Model/ErrorType.php
 lib/Model/ExecutePasswordChangeParams.php
+lib/Model/ExecuteSepaDirectDebitParams.php
+lib/Model/ExecuteSepaMoneyTransferParams.php
 lib/Model/ISO3166Alpha2Codes.php
 lib/Model/IbanRule.php
 lib/Model/IbanRuleIdentifiersParams.php
@@ -253,6 +274,7 @@ lib/Model/KeywordRuleList.php
 lib/Model/KeywordRuleParams.php
 lib/Model/KeywordRulesParams.php
 lib/Model/Label.php
+lib/Model/LabelList.php
 lib/Model/LabelParams.php
 lib/Model/LoginCredential.php
 lib/Model/LoginCredentialResource.php
@@ -262,6 +284,7 @@ lib/Model/MockBankConnectionUpdate.php
 lib/Model/MockBatchUpdateParams.php
 lib/Model/ModelInterface.php
 lib/Model/MoneyTransferOrderParams.php
+lib/Model/MoneyTransferOrderingResponse.php
 lib/Model/MonthlyUserStats.php
 lib/Model/MsaStatus.php
 lib/Model/MultiStepAuthenticationCallback.php
@@ -285,6 +308,7 @@ lib/Model/PageableUserInfoList.php
 lib/Model/Paging.php
 lib/Model/PasswordChangingResource.php
 lib/Model/Payment.php
+lib/Model/PaymentExecutionResponse.php
 lib/Model/PaymentStatus.php
 lib/Model/PaymentType.php
 lib/Model/PaypalTransactionData.php
@@ -292,12 +316,19 @@ lib/Model/PreferredConsentType.php
 lib/Model/Product.php
 lib/Model/RemoveInterfaceParams.php
 lib/Model/RequestPasswordChangeParams.php
+lib/Model/RequestSepaDirectDebitParams.php
+lib/Model/RequestSepaMoneyTransferParams.php
 lib/Model/Security.php
+lib/Model/SecurityList.php
 lib/Model/SecurityPositionQuantityNominalType.php
 lib/Model/SecurityPositionQuoteType.php
+lib/Model/SingleDirectDebitData.php
+lib/Model/SingleMoneyTransferRecipientData.php
 lib/Model/SplitTransactionsParams.php
 lib/Model/SubTransactionParams.php
 lib/Model/SubmitPaymentParams.php
+lib/Model/SupportedDataSource.php
+lib/Model/SupportedOrder.php
 lib/Model/TppAuthenticationGroup.php
 lib/Model/TppCertificate.php
 lib/Model/TppCertificateParams.php
@@ -308,6 +339,7 @@ lib/Model/TrainCategorizationData.php
 lib/Model/TrainCategorizationTransactionData.php
 lib/Model/Transaction.php
 lib/Model/TransactionDirection.php
+lib/Model/TransactionList.php
 lib/Model/TriggerCategorizationParams.php
 lib/Model/TwoStepProcedure.php
 lib/Model/UpdateBankConnectionParams.php
@@ -343,7 +375,6 @@ test/Api/TPPCertificatesApiTest.php
 test/Api/TPPCredentialsApiTest.php
 test/Api/TransactionsApiTest.php
 test/Api/UsersApiTest.php
-test/Api/WebFormsApiTest.php
 test/Model/AccessTokenTest.php
 test/Model/AccountCapabilityTest.php
 test/Model/AccountInterfacePaymentCapabilitiesTest.php
@@ -366,6 +397,7 @@ test/Model/BankInterfaceLoginFieldTest.php
 test/Model/BankInterfacePaymentCapabilitiesTest.php
 test/Model/BankInterfacePropertyTest.php
 test/Model/BankInterfaceTest.php
+test/Model/BankListTest.php
 test/Model/BankTest.php
 test/Model/BankingInterfaceTest.php
 test/Model/CashFlowListTest.php
@@ -374,11 +406,13 @@ test/Model/CategorizationCheckResultTest.php
 test/Model/CategorizationCheckResultsTest.php
 test/Model/CategorizationRuleDirectionTest.php
 test/Model/CategorizationStatusTest.php
+test/Model/CategoryListTest.php
 test/Model/CategoryParamsTest.php
 test/Model/CategoryTest.php
 test/Model/ChangeClientCredentialsParamsTest.php
 test/Model/CheckCategorizationDataTest.php
 test/Model/CheckCategorizationTransactionDataTest.php
+test/Model/ClearingAccountDataTest.php
 test/Model/ClientConfigurationParamsTest.php
 test/Model/ClientConfigurationTest.php
 test/Model/ConnectInterfaceParamsTest.php
@@ -390,6 +424,7 @@ test/Model/DailyBalanceTest.php
 test/Model/DeleteConsentResultTest.php
 test/Model/DeleteConsentTest.php
 test/Model/DirectDebitOrderParamsTest.php
+test/Model/DirectDebitOrderingResponseTest.php
 test/Model/DirectDebitSequenceTypeTest.php
 test/Model/DirectDebitTypeTest.php
 test/Model/EditBankConnectionParamsTest.php
@@ -400,6 +435,8 @@ test/Model/ErrorDetailsTest.php
 test/Model/ErrorMessageTest.php
 test/Model/ErrorTypeTest.php
 test/Model/ExecutePasswordChangeParamsTest.php
+test/Model/ExecuteSepaDirectDebitParamsTest.php
+test/Model/ExecuteSepaMoneyTransferParamsTest.php
 test/Model/ISO3166Alpha2CodesTest.php
 test/Model/IbanRuleIdentifiersParamsTest.php
 test/Model/IbanRuleListTest.php
@@ -413,6 +450,7 @@ test/Model/KeywordRuleListTest.php
 test/Model/KeywordRuleParamsTest.php
 test/Model/KeywordRuleTest.php
 test/Model/KeywordRulesParamsTest.php
+test/Model/LabelListTest.php
 test/Model/LabelParamsTest.php
 test/Model/LabelTest.php
 test/Model/LoginCredentialResourceTest.php
@@ -422,6 +460,7 @@ test/Model/MockAccountDataTest.php
 test/Model/MockBankConnectionUpdateTest.php
 test/Model/MockBatchUpdateParamsTest.php
 test/Model/MoneyTransferOrderParamsTest.php
+test/Model/MoneyTransferOrderingResponseTest.php
 test/Model/MonthlyUserStatsTest.php
 test/Model/MsaStatusTest.php
 test/Model/MultiStepAuthenticationCallbackTest.php
@@ -444,6 +483,7 @@ test/Model/PageableTransactionListTest.php
 test/Model/PageableUserInfoListTest.php
 test/Model/PagingTest.php
 test/Model/PasswordChangingResourceTest.php
+test/Model/PaymentExecutionResponseTest.php
 test/Model/PaymentStatusTest.php
 test/Model/PaymentTest.php
 test/Model/PaymentTypeTest.php
@@ -452,12 +492,19 @@ test/Model/PreferredConsentTypeTest.php
 test/Model/ProductTest.php
 test/Model/RemoveInterfaceParamsTest.php
 test/Model/RequestPasswordChangeParamsTest.php
+test/Model/RequestSepaDirectDebitParamsTest.php
+test/Model/RequestSepaMoneyTransferParamsTest.php
+test/Model/SecurityListTest.php
 test/Model/SecurityPositionQuantityNominalTypeTest.php
 test/Model/SecurityPositionQuoteTypeTest.php
 test/Model/SecurityTest.php
+test/Model/SingleDirectDebitDataTest.php
+test/Model/SingleMoneyTransferRecipientDataTest.php
 test/Model/SplitTransactionsParamsTest.php
 test/Model/SubTransactionParamsTest.php
 test/Model/SubmitPaymentParamsTest.php
+test/Model/SupportedDataSourceTest.php
+test/Model/SupportedOrderTest.php
 test/Model/TppAuthenticationGroupTest.php
 test/Model/TppCertificateParamsTest.php
 test/Model/TppCertificateTest.php
@@ -467,6 +514,7 @@ test/Model/TppCredentialsTest.php
 test/Model/TrainCategorizationDataTest.php
 test/Model/TrainCategorizationTransactionDataTest.php
 test/Model/TransactionDirectionTest.php
+test/Model/TransactionListTest.php
 test/Model/TransactionTest.php
 test/Model/TriggerCategorizationParamsTest.php
 test/Model/TwoStepProcedureTest.php

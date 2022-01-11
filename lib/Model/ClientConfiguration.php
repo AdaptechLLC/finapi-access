@@ -13,12 +13,12 @@
 /**
  * finAPI Access
  *
- * <strong>RESTful API for Account Information Services (AIS) and Payment Initiation Services (PIS)</strong>  The following pages give you some general information on how to use our APIs.<br/> The actual API services documentation then follows further below. You can use the menu to jump between API sections. <br/> <br/> This page has a built-in HTTP(S) client, so you can test the services directly from within this page, by filling in the request parameters and/or body in the respective services, and then hitting the TRY button. Note that you need to be authorized to make a successful API call. To authorize, refer to the 'Authorization' section of the API, or just use the OAUTH button that can be found near the TRY button. <br/> <br/> You should also check out the <a href=\"https://finapi.zendesk.com/hc/en-us\" target=\"_blank\">Developer Portal</a> for more information. If you need any help with the API, contact support@finapi.io. <br/>  <h2>General information</h2>  <h3><strong>Error Responses</strong></h3> When an API call returns with an error, then in general it has the structure shown in the following example:  <pre> {   \"errors\": [     {       \"message\": \"Interface 'FINTS_SERVER' is not supported for this operation.\",       \"code\": \"BAD_REQUEST\",       \"type\": \"TECHNICAL\"     }   ],   \"date\": \"2020-11-19 16:54:06.854\",   \"requestId\": \"selfgen-312042e7-df55-47e4-bffd-956a68ef37b5\",   \"endpoint\": \"POST /api/v1/bankConnections/import\",   \"authContext\": \"1/21\",   \"bank\": \"DEMO0002 - finAPI Test Redirect Bank\" } </pre>  If an API call requires an additional authentication by the user, HTTP code 510 is returned and the error response contains the additional \"multiStepAuthentication\" object, see the following example:  <pre> {   \"errors\": [     {       \"message\": \"Es ist eine zusätzliche Authentifizierung erforderlich. Bitte geben Sie folgenden Code an: 123456\",       \"code\": \"ADDITIONAL_AUTHENTICATION_REQUIRED\",       \"type\": \"BUSINESS\",       \"multiStepAuthentication\": {         \"hash\": \"678b13f4be9ed7d981a840af8131223a\",         \"status\": \"CHALLENGE_RESPONSE_REQUIRED\",         \"challengeMessage\": \"Es ist eine zusätzliche Authentifizierung erforderlich. Bitte geben Sie folgenden Code an: 123456\",         \"answerFieldLabel\": \"TAN\",         \"redirectUrl\": null,         \"redirectContext\": null,         \"redirectContextField\": null,         \"twoStepProcedures\": null,         \"photoTanMimeType\": null,         \"photoTanData\": null,         \"opticalData\": null       }     }   ],   \"date\": \"2019-11-29 09:51:55.931\",   \"requestId\": \"selfgen-45059c99-1b14-4df7-9bd3-9d5f126df294\",   \"endpoint\": \"POST /api/v1/bankConnections/import\",   \"authContext\": \"1/18\",   \"bank\": \"DEMO0001 - finAPI Test Bank\" } </pre>  An exception to this error format are API authentication errors, where the following structure is returned:  <pre> {   \"error\": \"invalid_token\",   \"error_description\": \"Invalid access token: cccbce46-xxxx-xxxx-xxxx-xxxxxxxxxx\" } </pre>  <h3><strong>Paging</strong></h3> API services that may potentially return a lot of data implement paging. They return a limited number of entries within a \"page\". Further entries must be fetched with subsequent calls. <br/><br/> Any API service that implements paging provides the following input parameters:<br/> &bull; \"page\": the number of the page to be retrieved (starting with 1).<br/> &bull; \"perPage\": the number of entries within a page. The default and maximum value is stated in the documentation of the respective services.  A paged response contains an additional \"paging\" object with the following structure:  <pre> {   ...   ,   \"paging\": {     \"page\": 1,     \"perPage\": 20,     \"pageCount\": 234,     \"totalCount\": 4662   } } </pre>  <h3><strong>Internationalization</strong></h3> The finAPI services support internationalization which means you can define the language you prefer for API service responses. <br/><br/> The following languages are available: German, English, Czech, Slovak. <br/><br/> The preferred language can be defined by providing the official HTTP <strong>Accept-Language</strong> header. For web form request issued in a web browser, the Accept-Language header is automatically set by the browser based on the browser's or operation system's language settings. For direct API calls, the Accept-Language header must be set explicity. <br/><br/> finAPI reacts on the official iso language codes &quot;de&quot;, &quot;en&quot;, &quot;cs&quot; and &quot;sk&quot; for the named languages. Additional subtags supported by the Accept-Language header may be provided, e.g. &quot;en-US&quot;, but are ignored. <br/> If no Accept-Language header is given, German is used as the default language. <br/><br/> Exceptions:<br/> &bull; Bank login hints and login fields are only available in the language of the bank and not being translated.<br/> &bull; Direct messages from the bank systems typically returned as BUSINESS errors will not be translated.<br/> &bull; BUSINESS errors created by finAPI directly are available in German and English.<br/> &bull; TECHNICAL errors messages meant for developers are mostly in English, but also may be translated.  <h3><strong>Request IDs</strong></h3> With any API call, you can pass a request ID via a header with name \"X-Request-Id\". The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. <br/><br/> If you don't pass a request ID for a call, finAPI will generate a random ID internally. <br/><br/> The request ID is always returned back in the response of a service, as a header with name \"X-Request-Id\". <br/><br/> We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster.  <h3><strong>Overriding HTTP methods</strong></h3> Some HTTP clients do not support the HTTP methods PATCH or DELETE. If you are using such a client in your application, you can use a POST request instead with a special HTTP header indicating the originally intended HTTP method. <br/><br/> The header's name is <strong>X-HTTP-Method-Override</strong>. Set its value to either <strong>PATCH</strong> or <strong>DELETE</strong>. POST Requests having this header set will be treated either as PATCH or DELETE by the finAPI servers. <br/><br/> Example: <br/><br/> <strong>X-HTTP-Method-Override: PATCH</strong><br/> POST /api/v1/label/51<br/> {\"name\": \"changed label\"}<br/><br/> will be interpreted by finAPI as:<br/><br/> PATCH /api/v1/label/51<br/> {\"name\": \"changed label\"}<br/>  <h3><strong>User metadata</strong></h3> With the migration to PSD2 APIs, a new term called \"User metadata\" (also known as \"PSU metadata\") has been introduced to the API. This user metadata aims to inform the banking API if there was a real end-user behind an HTTP request or if the request was triggered by a system (e.g. by an automatic batch update). In the latter case, the bank may apply some restrictions such as limiting the number of HTTP requests for a single consent. Also, some operations may be forbidden entirely by the banking API. For example, some banks do not allow issuing a new consent without the end-user being involved. Therefore, the PSU metadata must always be provided for such operations. <br/><br/> As finAPI does not have direct interaction with the end-user, it is the client application's responsibility to provide all the necessary information about the end-user. This must be done by sending additional headers with every request triggered on behalf of the end-user. <br/><br/> At the moment, the following headers are supported by the API:<br/> &bull; \"PSU-IP-Address\" - the IP address of the user's device.<br/> &bull; \"PSU-Device-OS\" - the user's device and/or operating system identification.<br/> &bull; \"PSU-User-Agent\" - the user's web browser or other client device identification. <br/><br/> Web-form customers (or unlicensed customers) must send the PSU headers from their client application to finAPI. It will not take effect if web form is triggered for the workflow. <br/> In this case Values for the PSU-Device-OS and PSU-User-Agent headers are identified by the JS platform detection and the PSU-IP-Address is obtained from a public Cloudflare service: https://www.cloudflare.com/cdn-cgi/trace. <br/><br/> But it is certainly necessary and obligatory to have the true PSU header data for API calls which don't trigger a web form (like \"Update a bank connection\").  <h3><strong>FAQ</strong></h3> <strong>Is there a finAPI SDK?</strong> <br/> Currently we do not offer a native SDK, but there is the option to generate a SDK for almost any target language via OpenAPI. Use the 'Download SDK' button on this page for SDK generation. <br/> <br/> <strong>How can I enable finAPI's automatic batch update?</strong> <br/> Currently there is no way to set up the batch update via the API. Please contact support@finapi.io for this. <br/> <br/> <strong>Why do I need to keep authorizing when calling services on this page?</strong> <br/> This page is a \"one-page-app\". Reloading the page resets the OAuth authorization context. There is generally no need to reload the page, so just don't do it and your authorization will persist.
+ * <strong>RESTful API for Account Information Services (AIS) and Payment Initiation Services (PIS)</strong>  The following pages give you some general information on how to use our APIs.<br/> The actual API services documentation then follows further below. You can use the menu to jump between API sections. <br/> <br/> This page has a built-in HTTP(S) client, so you can test the services directly from within this page, by filling in the request parameters and/or body in the respective services, and then hitting the TRY button. Note that you need to be authorized to make a successful API call. To authorize, refer to the 'Authorization' section of the API, or just use the OAUTH button that can be found near the TRY button. <br/>  <h2 id=\"general-information\">General information</h2>  <h3 id=\"general-error-responses\"><strong>Error Responses</strong></h3> When an API call returns with an error, then in general it has the structure shown in the following example:  <pre> {   \"errors\": [     {       \"message\": \"Interface 'FINTS_SERVER' is not supported for this operation.\",       \"code\": \"BAD_REQUEST\",       \"type\": \"TECHNICAL\"     }   ],   \"date\": \"2020-11-19 16:54:06.854\",   \"requestId\": \"selfgen-312042e7-df55-47e4-bffd-956a68ef37b5\",   \"endpoint\": \"POST /api/v1/bankConnections/import\",   \"authContext\": \"1/21\",   \"bank\": \"DEMO0002 - finAPI Test Redirect Bank\" } </pre>  If an API call requires an additional authentication by the user, HTTP code 510 is returned and the error response contains the additional \"multiStepAuthentication\" object, see the following example:  <pre> {   \"errors\": [     {       \"message\": \"Es ist eine zusätzliche Authentifizierung erforderlich. Bitte geben Sie folgenden Code an: 123456\",       \"code\": \"ADDITIONAL_AUTHENTICATION_REQUIRED\",       \"type\": \"BUSINESS\",       \"multiStepAuthentication\": {         \"hash\": \"678b13f4be9ed7d981a840af8131223a\",         \"status\": \"CHALLENGE_RESPONSE_REQUIRED\",         \"challengeMessage\": \"Es ist eine zusätzliche Authentifizierung erforderlich. Bitte geben Sie folgenden Code an: 123456\",         \"answerFieldLabel\": \"TAN\",         \"redirectUrl\": null,         \"redirectContext\": null,         \"redirectContextField\": null,         \"twoStepProcedures\": null,         \"photoTanMimeType\": null,         \"photoTanData\": null,         \"opticalData\": null       }     }   ],   \"date\": \"2019-11-29 09:51:55.931\",   \"requestId\": \"selfgen-45059c99-1b14-4df7-9bd3-9d5f126df294\",   \"endpoint\": \"POST /api/v1/bankConnections/import\",   \"authContext\": \"1/18\",   \"bank\": \"DEMO0001 - finAPI Test Bank\" } </pre>  An exception to this error format are API authentication errors, where the following structure is returned:  <pre> {   \"error\": \"invalid_token\",   \"error_description\": \"Invalid access token: cccbce46-xxxx-xxxx-xxxx-xxxxxxxxxx\" } </pre>  <h3 id=\"general-paging\"><strong>Paging</strong></h3> API services that may potentially return a lot of data implement paging. They return a limited number of entries within a \"page\". Further entries must be fetched with subsequent calls. <br/><br/> Any API service that implements paging provides the following input parameters:<br/> &bull; \"page\": the number of the page to be retrieved (starting with 1).<br/> &bull; \"perPage\": the number of entries within a page. The default and maximum value is stated in the documentation of the respective services.  A paged response contains an additional \"paging\" object with the following structure:  <pre> {   ...   ,   \"paging\": {     \"page\": 1,     \"perPage\": 20,     \"pageCount\": 234,     \"totalCount\": 4662   } } </pre>  <h3 id=\"general-internationalization\"><strong>Internationalization</strong></h3> The finAPI services support internationalization which means you can define the language you prefer for API service responses. <br/><br/> The following languages are available: German, English, Czech, Slovak. <br/><br/> The preferred language can be defined by providing the official HTTP <strong>Accept-Language</strong> header. <br/><br/> finAPI reacts on the official iso language codes &quot;de&quot;, &quot;en&quot;, &quot;cs&quot; and &quot;sk&quot; for the named languages. Additional subtags supported by the Accept-Language header may be provided, e.g. &quot;en-US&quot;, but are ignored. <br/> If no Accept-Language header is given, German is used as the default language. <br/><br/> Exceptions:<br/> &bull; Bank login hints and login fields are only available in the language of the bank and not being translated.<br/> &bull; Direct messages from the bank systems typically returned as BUSINESS errors will not be translated.<br/> &bull; BUSINESS errors created by finAPI directly are available in German and English.<br/> &bull; TECHNICAL errors messages meant for developers are mostly in English, but also may be translated.  <h3 id=\"general-request-ids\"><strong>Request IDs</strong></h3> With any API call, you can pass a request ID via a header with name \"X-Request-Id\". The request ID can be an arbitrary string with up to 255 characters. Passing a longer string will result in an error. <br/><br/> If you don't pass a request ID for a call, finAPI will generate a random ID internally. <br/><br/> The request ID is always returned back in the response of a service, as a header with name \"X-Request-Id\". <br/><br/> We highly recommend to always pass a (preferably unique) request ID, and include it into your client application logs whenever you make a request or receive a response (especially in the case of an error response). finAPI is also logging request IDs on its end. Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster.  <h3 id=\"general-overriding-http-methods\"><strong>Overriding HTTP methods</strong></h3> Some HTTP clients do not support the HTTP methods PATCH or DELETE. If you are using such a client in your application, you can use a POST request instead with a special HTTP header indicating the originally intended HTTP method. <br/><br/> The header's name is <strong>X-HTTP-Method-Override</strong>. Set its value to either <strong>PATCH</strong> or <strong>DELETE</strong>. POST Requests having this header set will be treated either as PATCH or DELETE by the finAPI servers. <br/><br/> Example: <br/><br/> <strong>X-HTTP-Method-Override: PATCH</strong><br/> POST /api/v1/label/51<br/> {\"name\": \"changed label\"}<br/><br/> will be interpreted by finAPI as:<br/><br/> PATCH /api/v1/label/51<br/> {\"name\": \"changed label\"}<br/>  <h3 id=\"general-user-metadata\"><strong>User metadata</strong></h3> With the migration to PSD2 APIs, a new term called \"User metadata\" (also known as \"PSU metadata\") has been introduced to the API. This user metadata aims to inform the banking API if there was a real end-user behind an HTTP request or if the request was triggered by a system (e.g. by an automatic batch update). In the latter case, the bank may apply some restrictions such as limiting the number of HTTP requests for a single consent. Also, some operations may be forbidden entirely by the banking API. For example, some banks do not allow issuing a new consent without the end-user being involved. Therefore, it is certainly necessary and obligatory for the customer to provide the PSU metadata for such operations. <br/><br/> As finAPI does not have direct interaction with the end-user, it is the client application's responsibility to provide all the necessary information about the end-user. This must be done by sending additional headers with every request triggered on behalf of the end-user. <br/><br/> At the moment, the following headers are supported by the API:<br/> &bull; \"PSU-IP-Address\" - the IP address of the user's device.<br/> &bull; \"PSU-Device-OS\" - the user's device and/or operating system identification.<br/> &bull; \"PSU-User-Agent\" - the user's web browser or other client device identification.  <h3 id=\"general-faq\"><strong>FAQ</strong></h3> <strong>Is there a finAPI SDK?</strong> <br/> Currently we do not offer a native SDK, but there is the option to generate a SDK for almost any target language via OpenAPI. Use the 'Download SDK' button on this page for SDK generation. <br/> <br/> <strong>How can I enable finAPI's automatic batch update?</strong> <br/> Currently there is no way to set up the batch update via the API. Please contact support@finapi.io for this. <br/> <br/> <strong>Why do I need to keep authorizing when calling services on this page?</strong> <br/> This page is a \"one-page-app\". Reloading the page resets the OAuth authorization context. There is generally no need to reload the page, so just don't do it and your authorization will persist.
  *
- * The version of the OpenAPI document: 1.138.1
+ * The version of the OpenAPI document: 1.143.1
  * Contact: kontakt@finapi.io
  * Generated by: https://openapi-generator.tech
- * OpenAPI Generator version: 5.2.1
+ * OpenAPI Generator version: 5.3.0
  */
 
 /**
@@ -82,11 +82,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'is_standalone_payments_enabled' => 'bool',
         'available_bank_groups' => 'string[]',
         'products' => 'Product[]',
-        'application_name' => 'string',
         'fin_ts_product_registration_number' => 'string',
-        'store_secrets_available_in_web_form' => 'bool',
-        'support_subject_default' => 'string',
-        'support_email' => 'string',
         'ais_web_form_mode' => 'WebFormMode',
         'pis_web_form_mode' => 'WebFormMode',
         'pis_standalone_web_form_mode' => 'WebFormMode',
@@ -124,11 +120,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'is_standalone_payments_enabled' => null,
         'available_bank_groups' => null,
         'products' => null,
-        'application_name' => null,
         'fin_ts_product_registration_number' => null,
-        'store_secrets_available_in_web_form' => null,
-        'support_subject_default' => null,
-        'support_email' => null,
         'ais_web_form_mode' => null,
         'pis_web_form_mode' => null,
         'pis_standalone_web_form_mode' => null,
@@ -185,11 +177,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'is_standalone_payments_enabled' => 'isStandalonePaymentsEnabled',
         'available_bank_groups' => 'availableBankGroups',
         'products' => 'products',
-        'application_name' => 'applicationName',
         'fin_ts_product_registration_number' => 'finTSProductRegistrationNumber',
-        'store_secrets_available_in_web_form' => 'storeSecretsAvailableInWebForm',
-        'support_subject_default' => 'supportSubjectDefault',
-        'support_email' => 'supportEmail',
         'ais_web_form_mode' => 'aisWebFormMode',
         'pis_web_form_mode' => 'pisWebFormMode',
         'pis_standalone_web_form_mode' => 'pisStandaloneWebFormMode',
@@ -225,11 +213,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'is_standalone_payments_enabled' => 'setIsStandalonePaymentsEnabled',
         'available_bank_groups' => 'setAvailableBankGroups',
         'products' => 'setProducts',
-        'application_name' => 'setApplicationName',
         'fin_ts_product_registration_number' => 'setFinTsProductRegistrationNumber',
-        'store_secrets_available_in_web_form' => 'setStoreSecretsAvailableInWebForm',
-        'support_subject_default' => 'setSupportSubjectDefault',
-        'support_email' => 'setSupportEmail',
         'ais_web_form_mode' => 'setAisWebFormMode',
         'pis_web_form_mode' => 'setPisWebFormMode',
         'pis_standalone_web_form_mode' => 'setPisStandaloneWebFormMode',
@@ -265,11 +249,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         'is_standalone_payments_enabled' => 'getIsStandalonePaymentsEnabled',
         'available_bank_groups' => 'getAvailableBankGroups',
         'products' => 'getProducts',
-        'application_name' => 'getApplicationName',
         'fin_ts_product_registration_number' => 'getFinTsProductRegistrationNumber',
-        'store_secrets_available_in_web_form' => 'getStoreSecretsAvailableInWebForm',
-        'support_subject_default' => 'getSupportSubjectDefault',
-        'support_email' => 'getSupportEmail',
         'ais_web_form_mode' => 'getAisWebFormMode',
         'pis_web_form_mode' => 'getPisWebFormMode',
         'pis_standalone_web_form_mode' => 'getPisStandaloneWebFormMode',
@@ -356,11 +336,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         $this->container['is_standalone_payments_enabled'] = $data['is_standalone_payments_enabled'] ?? null;
         $this->container['available_bank_groups'] = $data['available_bank_groups'] ?? null;
         $this->container['products'] = $data['products'] ?? null;
-        $this->container['application_name'] = $data['application_name'] ?? null;
         $this->container['fin_ts_product_registration_number'] = $data['fin_ts_product_registration_number'] ?? null;
-        $this->container['store_secrets_available_in_web_form'] = $data['store_secrets_available_in_web_form'] ?? null;
-        $this->container['support_subject_default'] = $data['support_subject_default'] ?? null;
-        $this->container['support_email'] = $data['support_email'] ?? null;
         $this->container['ais_web_form_mode'] = $data['ais_web_form_mode'] ?? null;
         $this->container['pis_web_form_mode'] = $data['pis_web_form_mode'] ?? null;
         $this->container['pis_standalone_web_form_mode'] = $data['pis_standalone_web_form_mode'] ?? null;
@@ -441,20 +417,8 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
         if ($this->container['products'] === null) {
             $invalidProperties[] = "'products' can't be null";
         }
-        if ($this->container['application_name'] === null) {
-            $invalidProperties[] = "'application_name' can't be null";
-        }
         if ($this->container['fin_ts_product_registration_number'] === null) {
             $invalidProperties[] = "'fin_ts_product_registration_number' can't be null";
-        }
-        if ($this->container['store_secrets_available_in_web_form'] === null) {
-            $invalidProperties[] = "'store_secrets_available_in_web_form' can't be null";
-        }
-        if ($this->container['support_subject_default'] === null) {
-            $invalidProperties[] = "'support_subject_default' can't be null";
-        }
-        if ($this->container['support_email'] === null) {
-            $invalidProperties[] = "'support_email' can't be null";
         }
         if ($this->container['ais_web_form_mode'] === null) {
             $invalidProperties[] = "'ais_web_form_mode' can't be null";
@@ -862,7 +826,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets is_mandator_admin
      *
-     * @param bool $is_mandator_admin Whether this client is a 'Mandator Admin'. Mandator Admins are special clients that can access the 'Mandator Administration' section of finAPI. If you do not yet have credentials for a Mandator Admin, please contact us at support@finapi.io. For further information, please refer to <a href='https://finapi.zendesk.com/hc/en-us/articles/115003661827-Difference-between-app-clients-and-mandator-admin-client' target='_blank'>this article</a> on our Dev Portal.
+     * @param bool $is_mandator_admin Whether this client is a 'Mandator Admin'. Mandator Admins are special clients that can access the 'Mandator Administration' section of finAPI. If you do not yet have credentials for a Mandator Admin, please contact us at support@finapi.io. For further information, please refer to <a href='https://documentation.finapi.io/access/Application-management.2763423767.html' target='_blank'>this page</a> on our Access Public Documentation.
      *
      * @return self
      */
@@ -996,30 +960,6 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets application_name
-     *
-     * @return string
-     */
-    public function getApplicationName()
-    {
-        return $this->container['application_name'];
-    }
-
-    /**
-     * Sets application_name
-     *
-     * @param string $application_name Application name. When an application name is set (e.g. \"My App\"), then <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> will display a text to the user \"Weiterleitung auf finAPI von ...\" (e.g. \"Weiterleitung auf finAPI von MyApp\").
-     *
-     * @return self
-     */
-    public function setApplicationName($application_name)
-    {
-        $this->container['application_name'] = $application_name;
-
-        return $this;
-    }
-
-    /**
      * Gets fin_ts_product_registration_number
      *
      * @return string
@@ -1044,78 +984,6 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     }
 
     /**
-     * Gets store_secrets_available_in_web_form
-     *
-     * @return bool
-     */
-    public function getStoreSecretsAvailableInWebForm()
-    {
-        return $this->container['store_secrets_available_in_web_form'];
-    }
-
-    /**
-     * Sets store_secrets_available_in_web_form
-     *
-     * @param bool $store_secrets_available_in_web_form Whether <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391' target='_blank'>finAPI's web form</a> will allow the user to choose whether to store login secrets (like a PIN) in finAPI. If this field is set to false, the option will not be available and the secrets not stored.
-     *
-     * @return self
-     */
-    public function setStoreSecretsAvailableInWebForm($store_secrets_available_in_web_form)
-    {
-        $this->container['store_secrets_available_in_web_form'] = $store_secrets_available_in_web_form;
-
-        return $this;
-    }
-
-    /**
-     * Gets support_subject_default
-     *
-     * @return string
-     */
-    public function getSupportSubjectDefault()
-    {
-        return $this->container['support_subject_default'];
-    }
-
-    /**
-     * Sets support_subject_default
-     *
-     * @param string $support_subject_default Default value for the subject element of support emails.
-     *
-     * @return self
-     */
-    public function setSupportSubjectDefault($support_subject_default)
-    {
-        $this->container['support_subject_default'] = $support_subject_default;
-
-        return $this;
-    }
-
-    /**
-     * Gets support_email
-     *
-     * @return string
-     */
-    public function getSupportEmail()
-    {
-        return $this->container['support_email'];
-    }
-
-    /**
-     * Sets support_email
-     *
-     * @param string $support_email Email address to sent support requests to from the web form.
-     *
-     * @return self
-     */
-    public function setSupportEmail($support_email)
-    {
-        $this->container['support_email'] = $support_email;
-
-        return $this;
-    }
-
-    /**
      * Gets ais_web_form_mode
      *
      * @return WebFormMode
@@ -1128,7 +996,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets ais_web_form_mode
      *
-     * @param WebFormMode $ais_web_form_mode <strong>Type:</strong> WebFormMode<br/> Indicates whether the client is using the finAPI webform for Account Initiation Services.<br/><br/>Possible values: <br/>&bull; <code>DISABLED</code> - No web form is triggered<br/>&bull; <code>INTERNAL</code> - End users will be directed to the <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391-finAPI-PSD2-Web-Form' target='_blank'>classical web form</a> implementation.<br/>&bull; <code>EXTERNAL</code> - End users will be directed to the <a href='https://finapi.jira.com/wiki/spaces/FWFPD/overview'  target='_blank'>new web form</a> implementation.
+     * @param WebFormMode $ais_web_form_mode <strong>Type:</strong> WebFormMode<br/> Indicates whether the client is using the finAPI Web Form for Account Initiation Services.<br/><br/>Possible values: <br/>&bull; <code>DISABLED</code> - No Web Form is triggered<br/>&bull; <code>INTERNAL</code> - THIS VALUE IS DEPRECATED AND WILL BE REMOVED. Hence, we request customers to foresee a migration to Web Form 2.0 (value <code>EXTERNAL</code>).<br/>End users will be directed to the classical Web Form implementation.<br/>&bull; <code>EXTERNAL</code> - End users will be directed to the <a href='https://documentation.finapi.io/webform/Introduction.2038136860.html'  target='_blank'>new Web Form</a> implementation.
      *
      * @return self
      */
@@ -1152,7 +1020,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets pis_web_form_mode
      *
-     * @param WebFormMode $pis_web_form_mode <strong>Type:</strong> WebFormMode<br/> Indicates whether the client is using the finAPI webform for Standard Payment Initiation Services (Payments for accounts that have been imported in finAPI).<br/><br/>Possible values: <br/>&bull; <code>DISABLED</code> - No web form is triggered<br/>&bull; <code>INTERNAL</code> - End users will be directed to the <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391-finAPI-PSD2-Web-Form' target='_blank'>classical web form</a> implementation.<br/>&bull; <code>EXTERNAL</code> - End users will be directed to the <a href='https://finapi.jira.com/wiki/spaces/FWFPD/overview'  target='_blank'>new web form</a> implementation.
+     * @param WebFormMode $pis_web_form_mode <strong>Type:</strong> WebFormMode<br/> Indicates whether the client is using the finAPI Web Form for Standard Payment Initiation Services (Payments for accounts that have been imported in finAPI).<br/><br/>Possible values: <br/>&bull; <code>DISABLED</code> - No Web Form is triggered<br/>&bull; <code>INTERNAL</code> - THIS VALUE IS DEPRECATED AND WILL BE REMOVED. Hence, we request customers to foresee a migration to Web Form 2.0 (value <code>EXTERNAL</code>).<br/>End users will be directed to the classical Web Form implementation.<br/>&bull; <code>EXTERNAL</code> - End users will be directed to the <a href='https://documentation.finapi.io/webform/Introduction.2038136860.html'  target='_blank'>new Web Form</a> implementation.
      *
      * @return self
      */
@@ -1176,7 +1044,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets pis_standalone_web_form_mode
      *
-     * @param WebFormMode $pis_standalone_web_form_mode <strong>Type:</strong> WebFormMode<br/> Indicates whether the client is using the finAPI webform for Standalone Payment Initiation Services (Payments without account import).<br/><br/>Possible values: <br/>&bull; <code>DISABLED</code> - No web form is triggered<br/>&bull; <code>INTERNAL</code> - End users will be directed to the <a href='https://finapi.zendesk.com/hc/en-us/articles/360002596391-finAPI-PSD2-Web-Form' target='_blank'>classical web form</a> implementation.<br/>&bull; <code>EXTERNAL</code> - End users will be directed to the <a href='https://finapi.jira.com/wiki/spaces/FWFPD/overview'  target='_blank'>new web form</a> implementation.
+     * @param WebFormMode $pis_standalone_web_form_mode <strong>Type:</strong> WebFormMode<br/> Indicates whether the client is using the finAPI Web Form for Standalone Payment Initiation Services (Payments without account import).<br/><br/>Possible values: <br/>&bull; <code>DISABLED</code> - No Web Form is triggered<br/>&bull; <code>INTERNAL</code> - THIS VALUE IS DEPRECATED AND WILL BE REMOVED. Hence, we request customers to foresee a migration to Web Form 2.0 (value <code>EXTERNAL</code>).<br/>End users will be directed to the classical Web Form implementation.<br/>&bull; <code>EXTERNAL</code> - End users will be directed to the <a href='https://documentation.finapi.io/webform/Introduction.2038136860.html'  target='_blank'>new Web Form</a> implementation.
      *
      * @return self
      */
@@ -1248,7 +1116,7 @@ class ClientConfiguration implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets auto_dismount_web_form
      *
-     * @param bool $auto_dismount_web_form This flag indicates whether the webform should get removed from the parent page automatically once it’s finished. It applies ONLY to the classical embedded web form. That means it’s only applied if aisWebFormMode, pisWebFormMode or pisStandaloneWebFormMode are defined as INTERNAL. In case you are using our standalone web form by redirecting the user to our web form link, this feature has no effect.
+     * @param bool $auto_dismount_web_form This flag indicates whether the Web Form should get removed from the parent page automatically once it’s finished. It applies ONLY to the classical embedded Web Form. That means it’s only applied if aisWebFormMode, pisWebFormMode or pisStandaloneWebFormMode are defined as INTERNAL. In case you are using our standalone Web Form by redirecting the user to our Web Form link, this feature has no effect.
      *
      * @return self
      */

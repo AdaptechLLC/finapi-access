@@ -11,14 +11,10 @@ by filling in the request parameters and/or body in the respective services, and
 Note that you need to be authorized to make a successful API call. To authorize, refer to the 'Authorization'
 section of the API, or just use the OAUTH button that can be found near the TRY button.
 <br/>
-<br/>
-You should also check out the <a href=\"https://finapi.zendesk.com/hc/en-us\" target=\"_blank\">Developer Portal</a>
-for more information. If you need any help with the API, contact support@finapi.io.
-<br/>
 
-<h2>General information</h2>
+<h2 id=\"general-information\">General information</h2>
 
-<h3><strong>Error Responses</strong></h3>
+<h3 id=\"general-error-responses\"><strong>Error Responses</strong></h3>
 When an API call returns with an error, then in general it has the structure shown in the following example:
 
 <pre>
@@ -80,7 +76,7 @@ An exception to this error format are API authentication errors, where the follo
 }
 </pre>
 
-<h3><strong>Paging</strong></h3>
+<h3 id=\"general-paging\"><strong>Paging</strong></h3>
 API services that may potentially return a lot of data implement paging.
 They return a limited number of entries within a \"page\". Further entries must be fetched with
 subsequent calls.
@@ -105,7 +101,7 @@ A paged response contains an additional \"paging\" object with the following str
 }
 </pre>
 
-<h3><strong>Internationalization</strong></h3>
+<h3 id=\"general-internationalization\"><strong>Internationalization</strong></h3>
 The finAPI services support internationalization which means you can define the language you prefer
 for API service responses.
 <br/><br/>
@@ -113,9 +109,6 @@ The following languages are available: German, English, Czech, Slovak.
 <br/><br/>
 The preferred language can be defined by providing the official HTTP <strong>Accept-Language</strong>
 header.
-For web form request issued in a web browser, the Accept-Language header is
-automatically set by the browser based on the browser's or operation system's language settings.
-For direct API calls, the Accept-Language header must be set explicity.
 <br/><br/>
 finAPI reacts on the official iso language codes &quot;de&quot;, &quot;en&quot;, &quot;cs&quot;
 and &quot;sk&quot; for the named languages.
@@ -133,7 +126,7 @@ be translated.<br/>
 &bull; TECHNICAL errors messages meant for developers are mostly in English, but also may be
 translated.
 
-<h3><strong>Request IDs</strong></h3>
+<h3 id=\"general-request-ids\"><strong>Request IDs</strong></h3>
 With any API call, you can pass a request ID via a header with name \"X-Request-Id\".
 The request ID can be an arbitrary string with up to 255 characters.
 Passing a longer string will result in an error.
@@ -148,7 +141,7 @@ client application logs whenever you make a request or receive a response
 (especially in the case of an error response). finAPI is also logging request IDs on its end.
 Having a request ID can help the finAPI support team to work more efficiently and solve tickets faster.
 
-<h3><strong>Overriding HTTP methods</strong></h3>
+<h3 id=\"general-overriding-http-methods\"><strong>Overriding HTTP methods</strong></h3>
 Some HTTP clients do not support the HTTP methods PATCH or DELETE.
 If you are using such a client in your application, you can use a POST request instead with a special
 HTTP header indicating the originally intended HTTP method.
@@ -166,7 +159,7 @@ will be interpreted by finAPI as:<br/><br/>
 PATCH /api/v1/label/51<br/>
 {\"name\": \"changed label\"}<br/>
 
-<h3><strong>User metadata</strong></h3>
+<h3 id=\"general-user-metadata\"><strong>User metadata</strong></h3>
 With the migration to PSD2 APIs, a new term called \"User metadata\"
 (also known as \"PSU metadata\") has been introduced to the API.
 This user metadata aims to inform the banking API if there was a real end-user
@@ -175,7 +168,7 @@ behind an HTTP request or if the request was triggered by a system
 such as limiting the number of HTTP requests for a single consent.
 Also, some operations may be forbidden entirely by the banking API.
 For example, some banks do not allow issuing a new consent without the end-user being involved.
-Therefore, the PSU metadata must always be provided for such operations.
+Therefore, it is certainly necessary and obligatory for the customer to provide the PSU metadata for such operations.
 <br/><br/>
 As finAPI does not have direct interaction with the end-user,
 it is the client application's responsibility to provide all the necessary
@@ -186,17 +179,8 @@ At the moment, the following headers are supported by the API:<br/>
 &bull; \"PSU-IP-Address\" - the IP address of the user's device.<br/>
 &bull; \"PSU-Device-OS\" - the user's device and/or operating system identification.<br/>
 &bull; \"PSU-User-Agent\" - the user's web browser or other client device identification.
-<br/><br/>
-Web-form customers (or unlicensed customers) must send the PSU headers from their client application
-to finAPI. It will not take effect if web form is triggered for the workflow.
-<br/>
-In this case Values for the PSU-Device-OS and PSU-User-Agent headers are identified
-by the JS platform detection and the PSU-IP-Address is obtained from a public Cloudflare service: https://www.cloudflare.com/cdn-cgi/trace.
-<br/><br/>
-But it is certainly necessary and obligatory to have the true PSU header data for API calls
-which don't trigger a web form (like \"Update a bank connection\").
 
-<h3><strong>FAQ</strong></h3>
+<h3 id=\"general-faq\"><strong>FAQ</strong></h3>
 <strong>Is there a finAPI SDK?</strong>
 <br/>
 Currently we do not offer a native SDK, but there is the option to generate a SDK
@@ -381,7 +365,6 @@ Class | Method | HTTP request | Description
 *UsersApi* | [**getVerificationStatus**](docs/Api/UsersApi.md#getverificationstatus) | **GET** /api/v1/users/verificationStatus | Get a user&#39;s verification status
 *UsersApi* | [**requestPasswordChange**](docs/Api/UsersApi.md#requestpasswordchange) | **POST** /api/v1/users/requestPasswordChange | Request password change
 *UsersApi* | [**verifyUser**](docs/Api/UsersApi.md#verifyuser) | **POST** /api/v1/users/verify/{userId} | Verify a user
-*WebFormsApi* | [**getWebForm**](docs/Api/WebFormsApi.md#getwebform) | **GET** /api/v1/webForms/{id} | Get a web form
 
 ## Models
 
@@ -408,6 +391,7 @@ Class | Method | HTTP request | Description
 - [BankInterfaceLoginField](docs/Model/BankInterfaceLoginField.md)
 - [BankInterfacePaymentCapabilities](docs/Model/BankInterfacePaymentCapabilities.md)
 - [BankInterfaceProperty](docs/Model/BankInterfaceProperty.md)
+- [BankList](docs/Model/BankList.md)
 - [BankingInterface](docs/Model/BankingInterface.md)
 - [CashFlow](docs/Model/CashFlow.md)
 - [CashFlowList](docs/Model/CashFlowList.md)
@@ -416,10 +400,12 @@ Class | Method | HTTP request | Description
 - [CategorizationRuleDirection](docs/Model/CategorizationRuleDirection.md)
 - [CategorizationStatus](docs/Model/CategorizationStatus.md)
 - [Category](docs/Model/Category.md)
+- [CategoryList](docs/Model/CategoryList.md)
 - [CategoryParams](docs/Model/CategoryParams.md)
 - [ChangeClientCredentialsParams](docs/Model/ChangeClientCredentialsParams.md)
 - [CheckCategorizationData](docs/Model/CheckCategorizationData.md)
 - [CheckCategorizationTransactionData](docs/Model/CheckCategorizationTransactionData.md)
+- [ClearingAccountData](docs/Model/ClearingAccountData.md)
 - [ClientConfiguration](docs/Model/ClientConfiguration.md)
 - [ClientConfigurationParams](docs/Model/ClientConfigurationParams.md)
 - [ConnectInterfaceParams](docs/Model/ConnectInterfaceParams.md)
@@ -431,6 +417,7 @@ Class | Method | HTTP request | Description
 - [DeleteConsent](docs/Model/DeleteConsent.md)
 - [DeleteConsentResult](docs/Model/DeleteConsentResult.md)
 - [DirectDebitOrderParams](docs/Model/DirectDebitOrderParams.md)
+- [DirectDebitOrderingResponse](docs/Model/DirectDebitOrderingResponse.md)
 - [DirectDebitSequenceType](docs/Model/DirectDebitSequenceType.md)
 - [DirectDebitType](docs/Model/DirectDebitType.md)
 - [EditBankConnectionParams](docs/Model/EditBankConnectionParams.md)
@@ -441,6 +428,8 @@ Class | Method | HTTP request | Description
 - [ErrorMessage](docs/Model/ErrorMessage.md)
 - [ErrorType](docs/Model/ErrorType.md)
 - [ExecutePasswordChangeParams](docs/Model/ExecutePasswordChangeParams.md)
+- [ExecuteSepaDirectDebitParams](docs/Model/ExecuteSepaDirectDebitParams.md)
+- [ExecuteSepaMoneyTransferParams](docs/Model/ExecuteSepaMoneyTransferParams.md)
 - [ISO3166Alpha2Codes](docs/Model/ISO3166Alpha2Codes.md)
 - [IbanRule](docs/Model/IbanRule.md)
 - [IbanRuleIdentifiersParams](docs/Model/IbanRuleIdentifiersParams.md)
@@ -455,6 +444,7 @@ Class | Method | HTTP request | Description
 - [KeywordRuleParams](docs/Model/KeywordRuleParams.md)
 - [KeywordRulesParams](docs/Model/KeywordRulesParams.md)
 - [Label](docs/Model/Label.md)
+- [LabelList](docs/Model/LabelList.md)
 - [LabelParams](docs/Model/LabelParams.md)
 - [LoginCredential](docs/Model/LoginCredential.md)
 - [LoginCredentialResource](docs/Model/LoginCredentialResource.md)
@@ -463,6 +453,7 @@ Class | Method | HTTP request | Description
 - [MockBankConnectionUpdate](docs/Model/MockBankConnectionUpdate.md)
 - [MockBatchUpdateParams](docs/Model/MockBatchUpdateParams.md)
 - [MoneyTransferOrderParams](docs/Model/MoneyTransferOrderParams.md)
+- [MoneyTransferOrderingResponse](docs/Model/MoneyTransferOrderingResponse.md)
 - [MonthlyUserStats](docs/Model/MonthlyUserStats.md)
 - [MsaStatus](docs/Model/MsaStatus.md)
 - [MultiStepAuthenticationCallback](docs/Model/MultiStepAuthenticationCallback.md)
@@ -486,6 +477,7 @@ Class | Method | HTTP request | Description
 - [Paging](docs/Model/Paging.md)
 - [PasswordChangingResource](docs/Model/PasswordChangingResource.md)
 - [Payment](docs/Model/Payment.md)
+- [PaymentExecutionResponse](docs/Model/PaymentExecutionResponse.md)
 - [PaymentStatus](docs/Model/PaymentStatus.md)
 - [PaymentType](docs/Model/PaymentType.md)
 - [PaypalTransactionData](docs/Model/PaypalTransactionData.md)
@@ -493,12 +485,19 @@ Class | Method | HTTP request | Description
 - [Product](docs/Model/Product.md)
 - [RemoveInterfaceParams](docs/Model/RemoveInterfaceParams.md)
 - [RequestPasswordChangeParams](docs/Model/RequestPasswordChangeParams.md)
+- [RequestSepaDirectDebitParams](docs/Model/RequestSepaDirectDebitParams.md)
+- [RequestSepaMoneyTransferParams](docs/Model/RequestSepaMoneyTransferParams.md)
 - [Security](docs/Model/Security.md)
+- [SecurityList](docs/Model/SecurityList.md)
 - [SecurityPositionQuantityNominalType](docs/Model/SecurityPositionQuantityNominalType.md)
 - [SecurityPositionQuoteType](docs/Model/SecurityPositionQuoteType.md)
+- [SingleDirectDebitData](docs/Model/SingleDirectDebitData.md)
+- [SingleMoneyTransferRecipientData](docs/Model/SingleMoneyTransferRecipientData.md)
 - [SplitTransactionsParams](docs/Model/SplitTransactionsParams.md)
 - [SubTransactionParams](docs/Model/SubTransactionParams.md)
 - [SubmitPaymentParams](docs/Model/SubmitPaymentParams.md)
+- [SupportedDataSource](docs/Model/SupportedDataSource.md)
+- [SupportedOrder](docs/Model/SupportedOrder.md)
 - [TppAuthenticationGroup](docs/Model/TppAuthenticationGroup.md)
 - [TppCertificate](docs/Model/TppCertificate.md)
 - [TppCertificateParams](docs/Model/TppCertificateParams.md)
@@ -509,6 +508,7 @@ Class | Method | HTTP request | Description
 - [TrainCategorizationTransactionData](docs/Model/TrainCategorizationTransactionData.md)
 - [Transaction](docs/Model/Transaction.md)
 - [TransactionDirection](docs/Model/TransactionDirection.md)
+- [TransactionList](docs/Model/TransactionList.md)
 - [TriggerCategorizationParams](docs/Model/TriggerCategorizationParams.md)
 - [TwoStepProcedure](docs/Model/TwoStepProcedure.md)
 - [UpdateBankConnectionParams](docs/Model/UpdateBankConnectionParams.md)
@@ -563,5 +563,5 @@ kontakt@finapi.io
 
 This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `1.138.1`
+- API version: `1.143.1`
 - Build package: `org.openapitools.codegen.languages.PhpClientCodegen`
